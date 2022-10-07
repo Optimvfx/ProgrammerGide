@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using Algoritms4editionProject;
 
 namespace Algoritm4editionVisualizetion
 {
     public class Visualizetion
     {
+        private readonly uint _showDistance = 100000;
+
+        private readonly int _randomKey = 20;
+
         public void ShowNHardnes()
         {
             var oneCurve = new CurveInfo("1", Color.White);
@@ -17,20 +23,68 @@ namespace Algoritm4editionVisualizetion
 
             var curves = new CurveInfo[] { oneCurve, sqrtCurve, logCurve, nCurve, nnCurve, nnnCurve, nMultiNCurve };
 
-            var graphVisualize = new GraphVisualizer("PIZDA", curves);
+            AddPointsToCurve(oneCurve, (y) => 1);
+            AddPointsToCurve(sqrtCurve, (y) => Math.Sqrt(y));
+            AddPointsToCurve(logCurve, (y) => Math.Log(y));
+            AddPointsToCurve(nCurve, (y) => y);
+            AddPointsToCurve(nnCurve, (y) => y * y);
+            AddPointsToCurve(nnnCurve, (y) => y * y * y);
+            AddPointsToCurve(nMultiNCurve, (y) => Math.Pow(y, y));
 
-            for (int i = 0; i < 100; i++)
+            ShowGraph("N Curves", curves);
+        }
+
+        public void ShowEqlidAlgoritm()
+        {
+            var random = GetRandom();
+
+            var eqlidAlgoritm = new EqlidAlgoritm();
+
+            var eqlidCurve = new CurveInfo("Eqlid Algoritm", Color.Red);
+
+            AddPointsToCurve(eqlidCurve, (y) => eqlidAlgoritm.GetWorkTime(y, random));
+
+            ShowGraph("Eqlid Algoritm", eqlidCurve);
+        }
+
+        public void ShowSearchAlgoritms()
+        {
+            var random = GetRandom();
+
+            var binarySearchAlgoritm = new BinaritySearchAlgoritm<int>();
+            var standartSearchAlgoritm = new StandartSearchAlgoritm<int>();
+
+            var binarySearchCurve = new CurveInfo("Binary Algoritm", Color.Red);
+            var standartSearchCurve = new CurveInfo("Standart Algoritm", Color.Blue);
+
+            AddPointsToCurve(binarySearchCurve, (y) => binarySearchAlgoritm.GetWorkTime(y, random));
+            AddPointsToCurve(standartSearchCurve, (y) => standartSearchAlgoritm.GetWorkTime(y, random));
+
+            ShowGraph("Search Algoritm", binarySearchCurve, standartSearchCurve);
+        }
+
+        private void ShowGraph(string name, params CurveInfo[] curves)
+        {
+            var graph = new GraphVisualizer(name, curves);
+            graph.Show();
+        }
+
+        private void AddPointsToCurve(CurveInfo curve, Func<uint, double> getXPoistion)
+        {
+            AddPointsToCurve(curve, _showDistance, getXPoistion);
+        }
+
+        private void AddPointsToCurve(CurveInfo curve, uint showDistance, Func<uint, double> getXPoistion)
+        {
+            for(uint i = 0; i < _showDistance; i += (i*2) + 1)
             {
-                oneCurve.AddPoint(new DataPoint(i, 1));
-                sqrtCurve.AddPoint(new DataPoint(i, Math.Sqrt(i)));
-                logCurve.AddPoint(new DataPoint(i, Math.Log(i)));
-                nCurve.AddPoint(new DataPoint(i, i));
-                nnCurve.AddPoint(new DataPoint(i, i * i));
-                nnnCurve.AddPoint(new DataPoint(i, i * i * i));
-                nMultiNCurve.AddPoint(new DataPoint(i, Math.Pow(i, i)));
+                curve.AddPoint(new DataPoint(i, getXPoistion(i)));
             }
+        }
 
-            graphVisualize.Show();
+        private Random GetRandom()
+        {
+            return new Random(_randomKey);
         }
     }
 }

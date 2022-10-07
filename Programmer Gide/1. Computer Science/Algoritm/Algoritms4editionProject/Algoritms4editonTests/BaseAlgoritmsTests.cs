@@ -2,14 +2,14 @@ namespace Algoritms4editonTests
 {
     public class BaseAlgoritmsTester
     {
-        public class EqlidAlgoritm
+        public class EqlidAlgoritmTests
         {
-            private BaseAlgoritms.EqlidAlgoritm _eqlidAlgoritm;
+            private EqlidAlgoritm _eqlidAlgoritm;
 
             [SetUp]
             public void Setup()
             {
-                _eqlidAlgoritm = new BaseAlgoritms.EqlidAlgoritm();
+                _eqlidAlgoritm = new EqlidAlgoritm();
             }
 
             //Data Validation Source https://planetcalc.ru/3298/
@@ -43,14 +43,14 @@ namespace Algoritms4editonTests
             }
         }
 
-        public class BinarytiSearch
+        public class BinarytiSearchTests
         {
-            private BaseAlgoritms.BinaritySearchAlgoritm<int> _binarytiSearch;
+            private BinaritySearchAlgoritm<int> _binarytiSearch;
 
             [SetUp]
             public void Setup()
             {
-                _binarytiSearch = new BaseAlgoritms.BinaritySearchAlgoritm<int>();
+                _binarytiSearch = new BinaritySearchAlgoritm<int>();
             }
 
             [TestCase(new int[] { 5, 15, 20, 25, 40 }, 5, 0, true)]
@@ -65,7 +65,7 @@ namespace Algoritms4editonTests
             [TestCase(new int[] { 5, 15, 20, 25, 40 }, 19, 0, false)]
             public void BinaritySearchTest(IEnumerable<int> sortedCollection, int searching, int exceptedFoundedIndex, bool exceptedSearchResult)
             {
-                var searchResult = _binarytiSearch.TrySearchElementIndex(sortedCollection,searching, out int foundedIndex);
+                var searchResult = _binarytiSearch.TrySearchElementIndexRecursion(sortedCollection,searching, out int foundedIndex);
 
                 AreEqualResult(searchResult, foundedIndex, exceptedSearchResult, exceptedFoundedIndex); 
             }
@@ -75,11 +75,6 @@ namespace Algoritms4editonTests
                 Assert.That(searchResult == exeptedSearchingResult, $"{nameof(searchResult)} {searchResult} != {nameof(exeptedSearchingResult)} {exeptedSearchingResult}.");
                 Assert.That(foundedIndex == exeptedFoundedIndex, $"{(nameof(foundedIndex))} {foundedIndex} != {nameof(exeptedFoundedIndex)} {exeptedFoundedIndex}.");
             }
-        }
-
-        public struct Vector2
-        {
-            int X, Y;
         }
     }
 }

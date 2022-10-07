@@ -27,6 +27,8 @@ namespace Algoritm4editionVisualizetion
 
 			_curveInfoToCurve = CreateCurves(_chart, curves);
 
+			 ResizeChart();
+
 			_form.Controls.Add(_chart);
 		}
 
@@ -53,6 +55,11 @@ namespace Algoritm4editionVisualizetion
 			var curve = new PointPairList();
 
 			var line = _chart.GraphPane.AddCurve(curveInfo.Name, curve, curveInfo.Color, SymbolType.None);
+
+			foreach(var point in curveInfo.Points)
+            {
+				curve.Add(point.X, point.OriginalY);
+            }
 
 			line.Line.Width = _lineWidth;
 			line.Line.IsAntiAlias = true;
@@ -87,13 +94,18 @@ namespace Algoritm4editionVisualizetion
 			chart.GraphPane.YAxis.Scale.MinAuto = true;
 		}
 
+        private void ResizeChart()
+        {
+			_chart.AxisChange();
+			_chart.Invalidate();
+			_chart.Refresh();
+		}
+
 		private void AddPoint(CurveInfo curve, DataPoint addingPoint)
 		{
 			_curveInfoToCurve[curve].Add(addingPoint.X, addingPoint.OriginalY);
 
-			_chart.AxisChange();
-			_chart.Invalidate();
-			_chart.Refresh();
+			ResizeChart();
 		}
 	}
 }
