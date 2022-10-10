@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Algoritms4editionProject
+namespace AlgoritmsProject
 {
     public abstract class Algoritm
     {

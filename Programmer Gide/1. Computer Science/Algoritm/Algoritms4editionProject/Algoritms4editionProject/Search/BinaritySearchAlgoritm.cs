@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Extensions;
 
-namespace Algoritms4editionProject
+namespace AlgoritmsProject
 {
     public class BinaritySearchAlgoritm<T> : Algoritm
                where T : IComparable

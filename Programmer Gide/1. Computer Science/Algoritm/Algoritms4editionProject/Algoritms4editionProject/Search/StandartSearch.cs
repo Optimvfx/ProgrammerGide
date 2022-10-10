@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using Extensions;
 
-namespace Algoritms4editionProject
+namespace AlgoritmsProject
 { 
     public class StandartSearchAlgoritm<T> : Algoritm
                where T : IComparable
@@ -33,7 +33,6 @@ namespace Algoritms4editionProject
 
             return false;
         }
-
 
         protected override void Work(uint hardnes, Random random, Stopwatch stopwatch)
         {

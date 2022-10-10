@@ -1,4 +1,4 @@
-﻿namespace Algoritm4editionVisualizetion
+﻿namespace AlgoritmVisualizetion
 {
 	public class DataPoint
 	{

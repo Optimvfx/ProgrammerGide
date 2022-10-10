@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using Algoritms4editionProject;
+using AlgoritmsProject;
 
-namespace Algoritm4editionVisualizetion
+namespace AlgoritmVisualizetion
 {
     public class Visualizetion
     {
-        private readonly uint _showDistance = 100000;
+        private readonly uint _showDistance = 10000;
 
         private readonly int _randomKey = 20;
 
-        public void ShowNHardnes()
+        public event Action<uint, uint> VisualizationProgresChanged;
+
+        public void ShowNHardnes(bool showNMulti)
         {
             var oneCurve = new CurveInfo("1", Color.White);
             var sqrtCurve = new CurveInfo("Sqrt(n)", Color.LightBlue);
@@ -29,7 +30,9 @@ namespace Algoritm4editionVisualizetion
             AddPointsToCurve(nCurve, (y) => y);
             AddPointsToCurve(nnCurve, (y) => y * y);
             AddPointsToCurve(nnnCurve, (y) => y * y * y);
-            AddPointsToCurve(nMultiNCurve, (y) => Math.Pow(y, y));
+
+            if (showNMulti)
+                AddPointsToCurve(nMultiNCurve, (y) => Math.Pow(y, y));
 
             ShowGraph("N Curves", curves);
         }
@@ -63,6 +66,36 @@ namespace Algoritm4editionVisualizetion
             ShowGraph("Search Algoritm", binarySearchCurve, standartSearchCurve);
         }
 
+        public void ShowSortAlgoritms()
+        {
+            var showDistanceModiffier = 0.1f;
+
+            var random = GetRandom();
+
+            var sellectionSortAlgoritm = new SellectionSortAlgoritm<int>();
+            var insertionSortAlgoritm = new InsertionSortAlgoritm<int>();
+            var mergeSortRecursionAlgoritm = new MergeSortAlgoritmRecursion<int>();
+            var mergeSortAlgoritm = new MergeSortAlgoritm<int>();
+            var quickSortRecursionAlgoritm = new QuickSortAlgoritmRecursion<int>();
+            var quickSortAlgoritm = new QuickSortAlgoritm<int>();
+
+            var sellectionSortCurve = new CurveInfo("Sellection Sort Curve", Color.Red);
+            var insertionSortCurve = new CurveInfo("Insertion Sort Curve", Color.Yellow);
+            var mergeSortRecursionCurve = new CurveInfo("Merge Sort Recursion Curve", Color.Green);
+            var mergeSortCurve = new CurveInfo("Merge Sort Curve", Color.Blue);
+            var quickSortRecursionCurve = new CurveInfo("Quick Sort Recursion Curve", Color.Cyan);
+            var quickSortCurve = new CurveInfo("Quick Sort Curve", Color.LightBlue);
+
+            AddPointsToCurve(sellectionSortCurve, (uint)(_showDistance * showDistanceModiffier), (y) => sellectionSortAlgoritm.GetWorkTime(y, random));
+            AddPointsToCurve(insertionSortCurve, (uint)(_showDistance * showDistanceModiffier), (y) => insertionSortAlgoritm.GetWorkTime(y, random));
+            AddPointsToCurve(mergeSortRecursionCurve, (uint)(_showDistance * showDistanceModiffier), (y) => mergeSortRecursionAlgoritm.GetWorkTime(y, random));
+            AddPointsToCurve(mergeSortCurve, (uint)(_showDistance * showDistanceModiffier), (y) => mergeSortAlgoritm.GetWorkTime(y, random));
+            AddPointsToCurve(quickSortRecursionCurve, (uint)(_showDistance * showDistanceModiffier), (y) => quickSortRecursionAlgoritm.GetWorkTime(y, random));
+            AddPointsToCurve(quickSortCurve, (uint)(_showDistance * showDistanceModiffier), (y) => quickSortAlgoritm.GetWorkTime(y, random));
+
+            ShowGraph("Sort Algoritm", sellectionSortCurve, insertionSortCurve, mergeSortRecursionCurve, mergeSortCurve, quickSortRecursionCurve, quickSortCurve);
+        }
+
         private void ShowGraph(string name, params CurveInfo[] curves)
         {
             var graph = new GraphVisualizer(name, curves);
@@ -76,9 +109,11 @@ namespace Algoritm4editionVisualizetion
 
         private void AddPointsToCurve(CurveInfo curve, uint showDistance, Func<uint, double> getXPoistion)
         {
-            for(uint i = 0; i < _showDistance; i += (i*2) + 1)
+            for(uint i = 0; i < showDistance; i += (i*2) + 1)
             {
                 curve.AddPoint(new DataPoint(i, getXPoistion(i)));
+
+                VisualizationProgresChanged?.Invoke(i, showDistance);
             }
         }
 

@@ -1,2 +1,2 @@
 global using NUnit.Framework;
-global using Algoritms4editionProject;
+global using AlgoritmsProject;

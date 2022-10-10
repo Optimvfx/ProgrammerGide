@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
 
-namespace Algoritm4editionVisualizetion
+namespace AlgoritmVisualizetion
 {
 	public class GraphVisualizer
 	{

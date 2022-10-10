@@ -1,5 +1,4 @@
-﻿using Algoritm4editionVisualizetion;
-using System.Threading;
+﻿using AlgoritmVisualizetion;
 
 namespace Program
 {
@@ -9,7 +8,7 @@ namespace Program
         {
             var visualizetion = new Visualizetion();
 
-            visualizetion.ShowSearchAlgoritms();
+            visualizetion.ShowSortAlgoritms();
         }
     }
 }
