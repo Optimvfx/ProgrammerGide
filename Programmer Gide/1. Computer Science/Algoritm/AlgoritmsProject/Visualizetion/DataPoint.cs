@@ -1,4 +1,4 @@
-﻿namespace AlgoritmVisualizetion
+﻿namespace GraphVisualizetion
 {
 	public class DataPoint
 	{

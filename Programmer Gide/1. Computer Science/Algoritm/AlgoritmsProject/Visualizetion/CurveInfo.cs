@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using ZedGraph;
 
-namespace AlgoritmVisualizetion
+namespace GraphVisualizetion
 {
     public class CurveInfo
     {

@@ -1,4 +1,5 @@
-﻿using AlgoritmVisualizetion;
+﻿using GraphShow;
+using GraphVisualizetion;
 
 namespace Program
 {
@@ -6,9 +7,12 @@ namespace Program
     {
         static void Main(string[] args)
         {
-            var visualizetion = new Visualizetion();
+            var visualizetion = new GraphShower(new Visualizer());
 
+            visualizetion.ShowNHardnes(false);
+            visualizetion.ShowEqlidAlgoritm();
             visualizetion.ShowSortAlgoritms();
+            visualizetion.ShowSearchAlgoritms();
         }
     }
 }
